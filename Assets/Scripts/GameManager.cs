@@ -32,7 +32,6 @@ public class GameManager : MonoBehaviour
         }
 
         modifierScore = 1.0f;
-        motor = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMotor>();
         modifierText.text = "x" + modifierScore.ToString("0.0");
         scoreText.text = score.ToString("0");
         coinText.text = coinScore.ToString();
