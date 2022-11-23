@@ -6,7 +6,7 @@ public class CameraFollow : MonoBehaviour
 {
     public Transform target;
     private Vector3 offset;
-    public float smoothSpeed = 0.04f;
+    public float smoothSpeed = 1.0f;
 
     // Start is called before the first frame update
     void Start()
