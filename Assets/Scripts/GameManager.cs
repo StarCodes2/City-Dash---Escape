@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
         }
 
         modifierScore = 1.0f;
+        motor = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMotor>();
         modifierText.text = "x" + modifierScore.ToString("0.0");
         scoreText.text = score.ToString("0");
         coinText.text = coinScore.ToString();
@@ -48,13 +49,17 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        // Bump the score up
-        lastScore = (int)score;
-        score += (Time.deltaTime * modifierScore);
-        if (lastScore == (int)score)
+        if (isGameStarted)
         {
-            scoreText.text = score.ToString("0");
+            // Bump the score up
+            lastScore = (int)score;
+            score += (Time.deltaTime * modifierScore);
+            if (lastScore == (int)score)
+            {
+                scoreText.text = score.ToString("0");
+            }
         }
+        
     }
 
     public void GetCoin()
@@ -69,5 +74,16 @@ public class GameManager : MonoBehaviour
     {
         modifierScore = 1.0f + modifierAmount;
         modifierText.text = "x" + modifierScore.ToString("0.0");
+    }
+
+    public void OnRestartButton()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Game Scene");
+    }
+
+    public void OnPlay()
+    {
+        isGameStarted = true;
+        motor.StartRunning();
     }
 }

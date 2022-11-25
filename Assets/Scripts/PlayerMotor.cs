@@ -6,6 +6,10 @@ public class PlayerMotor : MonoBehaviour
 {
     // Movement
     private CharacterController controller;
+    private bool isRunning = false;
+
+    // Animation
+    private Animator anim;
 
     // Speed Modifier
     private float originalSpeed = 7.0f;
@@ -19,11 +23,15 @@ public class PlayerMotor : MonoBehaviour
     {
         speed = originalSpeed;
         controller = GetComponent<CharacterController>();
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!isRunning)
+            return;
+
         if (Time.time - speedInceaseLastTick > speedIncreaseTime)
         {
             speedInceaseLastTick = Time.time;
@@ -38,5 +46,14 @@ public class PlayerMotor : MonoBehaviour
 
         // Move the Player
         controller.Move(moveVector * Time.deltaTime);
+
     }
+
+    public void StartRunning()
+    {
+        isRunning = true;
+        anim.SetTrigger("StartRunning");
+        transform.Rotate(0, 0, 0);
+    }
+
 }
