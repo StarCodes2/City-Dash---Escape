@@ -1,9 +1,13 @@
 fileFormatVersion: 2
+<<<<<<< Updated upstream
 <<<<<<< HEAD
 guid: 1d6174917531eb74dbcdbfd896514aa5
 =======
 guid: 6d3d44e71d72acb4eb4d9db373e9c913
 >>>>>>> 895c52f927c9af8e6d650c03bbda11ae9eb6a8bb
+=======
+guid: af20cb267a661224dbe90dbc773a9968
+>>>>>>> Stashed changes
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -92,6 +96,7 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+<<<<<<< Updated upstream
   - serializedVersion: 3
 <<<<<<< HEAD
     buildTarget: iPhone
@@ -119,6 +124,8 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+=======
+>>>>>>> Stashed changes
   spriteSheet:
     serializedVersion: 2
     sprites: []
