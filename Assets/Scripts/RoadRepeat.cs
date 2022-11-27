@@ -9,7 +9,6 @@ public class RoadRepeat : MonoBehaviour
     public Vector3 repeatPos;
 
     private int count;
-    public float now, now2;
 
     // Start is called before the first frame update
     void Start()
@@ -24,8 +23,6 @@ public class RoadRepeat : MonoBehaviour
     {
         if (player.position.z >= road2.position.z && road2.position.z > road.position.z)
         {
-            now = road2.position.z;
-            now2 = road.position.z;
             road.position = repeatPos;
             repeatPos.z /= count; // reset start value
             count++;
