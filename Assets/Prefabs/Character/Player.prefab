@@ -948,6 +948,7 @@ GameObject:
   - component: {fileID: 1425375460095629175}
   - component: {fileID: 4804609370166897376}
   - component: {fileID: 919132149058278003}
+  - component: {fileID: 1467820335}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -981,10 +982,10 @@ Animator:
   m_GameObject: {fileID: 5650908218755553207}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 5bb75974b6dddee4e9f9af8f1f6bc83b, type: 3}
-  m_Controller: {fileID: 9100000, guid: 25a7fbacb09236a45aa5d067b359d6b3, type: 2}
+  m_Controller: {fileID: 9100000, guid: a3ce2431f236fe14e9ef541731623836, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -1020,6 +1021,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5c9a8c361ae3554a8392325dd5250a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  jumpForce: 10
+  gravityModifier: 50
+  laneDisance: 4
+  gravity: -20
+--- !u!65 &1467820335
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5650908218755553207}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.58543104, y: 1.8481221, z: 0.33960724}
+  m_Center: {x: 0.002989918, y: 0.9008019, z: 0.015459061}
 --- !u!1 &5654270199876226241
 GameObject:
   m_ObjectHideFlags: 0

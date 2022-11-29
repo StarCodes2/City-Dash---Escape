@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     public static GameManager singleton;
 
     public static bool gameOver;
-    public static bool isGameStarted;
+    public static bool isGameStarted = false;
     public static bool mute = false;
     private PlayerMotor motor;
     private int lastScore;
@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
     // UI and UI fields
     public Text scoreText, coinText, modifierText, hiScoreText;
     private float score, coinScore, modifierScore;
+    public GameObject gameCanvas;
+    public GameObject gameOverCanvas;
 
     private void Awake()
     {
@@ -85,5 +87,13 @@ public class GameManager : MonoBehaviour
     {
         isGameStarted = true;
         motor.StartRunning();
+    }
+
+    public void OnDeath()
+    {
+        isGameStarted = false;
+        gameOver = true;
+        gameCanvas.SetActive(false);
+        gameOverCanvas.SetActive(true);
     }
 }
