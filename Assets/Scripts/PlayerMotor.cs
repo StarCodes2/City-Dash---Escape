@@ -7,14 +7,21 @@ public class PlayerMotor : MonoBehaviour
     // Movement
     private CharacterController controller;
     private bool isRunning = false;
-
+    private int laneNumberOne = 2;
     //Jumping
     private bool onGround = true;
     public float jumpForce = 10;
     private bool Jumping = false;
 
+    //Sliding
+    private bool isSliding = false;
+    private float Timerate = 1.3f;
+
     // Animation
     private Animator anim;
+
+    //Obstacle Repeat
+    public bool gameOver;
 
     //RigidBody
     private Rigidbody PlayerRigidbody;
@@ -62,6 +69,11 @@ public class PlayerMotor : MonoBehaviour
 
         moveVector.y += gravity * Time.deltaTime;
 
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            StartCoroutine(Slide());
+        }
+
         if (Input.GetKeyDown(KeyCode.UpArrow) && onGround)
         {
             Jump();
@@ -72,7 +84,7 @@ public class PlayerMotor : MonoBehaviour
         {
             desiredLane++;
             if (desiredLane == 3)
-                desiredLane = 2;
+                desiredLane = laneNumberOne;
         }
 
         if (Input.GetKeyDown(KeyCode.LeftArrow))
@@ -88,7 +100,7 @@ public class PlayerMotor : MonoBehaviour
         if (desiredLane == 0)
         {
             targetPosition += Vector3.left * laneDisance;
-        } else if (desiredLane == 2)
+        } else if (desiredLane == laneNumberOne)
         {
             targetPosition += Vector3.right * laneDisance;
         }
@@ -123,6 +135,13 @@ public class PlayerMotor : MonoBehaviour
         GameManager.isGameStarted = true;
         anim.SetTrigger("StartRunning");
         transform.Rotate(0, 0, 0);
+    }
+
+    private IEnumerator Slide()
+    {
+        anim.SetBool("isSliding", true);
+        yield return new WaitForSeconds(Timerate);
+        anim.SetBool("isSliding", false);
     }
 
     private void Jump()
