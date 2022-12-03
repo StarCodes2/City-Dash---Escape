@@ -104,14 +104,6 @@ public class PlayerMotor : MonoBehaviour
         {
             targetPosition += Vector3.right * laneDisance;
         }
-
-        // Player to Jump
-        if(Input.GetKeyDown(KeyCode.Space) && onGround)
-        {
-            PlayerRigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            onGround = false;
-            StartJumping();
-        }
         moveVector.x = (targetPosition - transform.position).x * speed;
 
         //transform.position = targetPosition;
@@ -123,12 +115,6 @@ public class PlayerMotor : MonoBehaviour
         controller.Move(moveVector * Time.fixedDeltaTime);
     }
 
-    public void StartJumping()
-    {
-        Jumping = true;
-        anim.SetTrigger("StartJumping");
-        transform.Translate(0, 50, 0);
-    }
     public void StartRunning()
     {
         isRunning = true;
