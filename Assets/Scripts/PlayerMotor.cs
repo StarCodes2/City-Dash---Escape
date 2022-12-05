@@ -53,7 +53,7 @@ public class PlayerMotor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!GameManager.isGameStarted && !GameManager.pause)
+        if (!GameManager.isGameStarted)
             return;
 
         if (Time.time - speedInceaseLastTick > speedIncreaseTime)
@@ -69,25 +69,25 @@ public class PlayerMotor : MonoBehaviour
 
         moveVector.y += gravity * Time.deltaTime;
 
-        if (SwipeManager.swipeDown && onGround)
+        if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             StartCoroutine(Slide());
         }
 
-        if (SwipeManager.swipeUp && onGround)
+        if (Input.GetKeyDown(KeyCode.UpArrow) && onGround)
         {
             Jump();
         }
 
         // Gather the input on which lane we should be
-        if (SwipeManager.swipeRight)
+        if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             desiredLane++;
             if (desiredLane == 3)
                 desiredLane = laneNumberOne;
         }
 
-        if (SwipeManager.swipeLeft)
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             desiredLane--;
             if (desiredLane == -1)
@@ -95,7 +95,7 @@ public class PlayerMotor : MonoBehaviour
         }
 
         // Calculate where we should be in he future
-        Vector3 targetPosition = Vector3.zero;
+        Vector3 targetPosition = Vector3.zero; //transform.position.z * transform.forward + transform.position.y * transform.up;
 
         if (desiredLane == 0)
         {
@@ -146,7 +146,7 @@ public class PlayerMotor : MonoBehaviour
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        if (hit.gameObject.tag == "Obstacle")
+        if (hit.gameObject.tag == "Death")
         {
             Crash();
         }

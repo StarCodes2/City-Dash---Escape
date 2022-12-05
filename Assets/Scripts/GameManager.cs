@@ -12,15 +12,12 @@ public class GameManager : MonoBehaviour
     public static bool gameOver;
     public static bool isGameStarted = false;
     public static bool mute = false;
-    public static bool pause = false;
     private PlayerMotor motor;
     private int lastScore;
 
     // UI and UI fields
     public Text scoreText, coinText, modifierText, hiScoreText;
-    public Text gameOverScore, gameOverCoin;
     private float score, coinScore, modifierScore;
-    public GameObject pauseCanvas;
     public GameObject gameCanvas;
     public GameObject gameOverCanvas;
 
@@ -54,7 +51,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (isGameStarted && !pause)
+        if (isGameStarted)
         {
             // Bump the score up
             lastScore = (int)score;
@@ -96,22 +93,7 @@ public class GameManager : MonoBehaviour
     {
         isGameStarted = false;
         gameOver = true;
-        pauseCanvas.SetActive(false);
         gameCanvas.SetActive(false);
         gameOverCanvas.SetActive(true);
-        gameOverScore.text = score.ToString("0");
-        gameOverCoin.text = coinScore.ToString("0");
-    }
-
-    public void OnPause(bool onPause)
-    {
-        pause = onPause;
-        if (!pause)
-        {
-            Time.timeScale = 1;
-        } else
-        {
-            Time.timeScale = 0;
-        }
     }
 }
