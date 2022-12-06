@@ -29,6 +29,7 @@ public class SpawnManager : MonoBehaviour
         {
             if (breakCount > 4)
             {
+                // Spawn an empty segment to give the player a little time to rest
                 Instantiate(obstaclePrefab[0], spawnPos, obstaclePrefab[0].transform.rotation);
                 count++;
                 SpawnObstacle(spawnCount - 1);
