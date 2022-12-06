@@ -6,19 +6,20 @@ public class SpawnManager : MonoBehaviour
 {
     public GameObject[] obstaclePrefab;
     private Vector3 spawnPos = new Vector3(0, 0, 0);
-    private int count = 0;
+    private int count;
     private float spawnDistance = 20.0f;
     private int index;
     public static bool spawn = false;
     private int breakCount = 0;
     private int spawnCount = 6;
-    private PlayerMotor playerMotorScript;
 
     // Start is called before the first frame update
     private void Start()
     {
+        // Use to track the position of the next obstacle to be spawned
+        count = 0;
+
         SpawnObstacle(11);
-        //InvokeRepeating("SpawnObstacle", startDelay, repeatRate);
     }
 
     // Update is called once per frame
