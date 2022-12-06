@@ -24,12 +24,24 @@ public class RoadRepeat : MonoBehaviour
         if (player.position.z >= road2.position.z && road2.position.z > road.position.z)
         {
             road.position = repeatPos;
+
+            if (count > 1)
+            {
+                SpawnManager.spawn = true;
+            }
+
             repeatPos.z /= count; // reset start value
             count++;
             repeatPos.z *= count;
         } else if (player.position.z >= road.position.z && road.position.z > road2.position.z)
         {
             road2.position = repeatPos;
+
+            if (count > 1)
+            {
+                SpawnManager.spawn = true;
+            }
+
             repeatPos.z /= count; // reset to the start value
             count++;
             repeatPos.z *= count;

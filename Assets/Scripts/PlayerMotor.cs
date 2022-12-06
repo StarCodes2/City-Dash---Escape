@@ -11,7 +11,6 @@ public class PlayerMotor : MonoBehaviour
     //Jumping
     private bool onGround = true;
     public float jumpForce = 10;
-    private bool Jumping = false;
 
     //Sliding
     private bool isSliding = false;
@@ -22,10 +21,6 @@ public class PlayerMotor : MonoBehaviour
 
     //Obstacle Repeat
     public bool gameOver;
-
-    //RigidBody
-    private Rigidbody PlayerRigidbody;
-    public float gravityModifier;
     
 
     // Speed Modifier
@@ -46,14 +41,12 @@ public class PlayerMotor : MonoBehaviour
         speed = originalSpeed;
         controller = GetComponent<CharacterController>();
         anim = GetComponent<Animator>();
-       // PlayerRigidbody = GetComponent<Rigidbody>();
-        //Physics.gravity *= gravityModifier;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!GameManager.isGameStarted)
+        if (!GameManager.isGameStarted || GameManager.pause)
             return;
 
         if (Time.time - speedInceaseLastTick > speedIncreaseTime)
@@ -69,25 +62,25 @@ public class PlayerMotor : MonoBehaviour
 
         moveVector.y += gravity * Time.deltaTime;
 
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+        if (SwipeManager.swipeDown && onGround)
         {
             StartCoroutine(Slide());
         }
 
-        if (Input.GetKeyDown(KeyCode.UpArrow) && onGround)
+        if (SwipeManager.swipeUp && onGround)
         {
             Jump();
         }
 
         // Gather the input on which lane we should be
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (SwipeManager.swipeRight)
         {
             desiredLane++;
             if (desiredLane == 3)
                 desiredLane = laneNumberOne;
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if (SwipeManager.swipeLeft)
         {
             desiredLane--;
             if (desiredLane == -1)
@@ -104,14 +97,6 @@ public class PlayerMotor : MonoBehaviour
         {
             targetPosition += Vector3.right * laneDisance;
         }
-
-        // Player to Jump
-        if(Input.GetKeyDown(KeyCode.Space) && onGround)
-        {
-            PlayerRigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            onGround = false;
-            StartJumping();
-        }
         moveVector.x = (targetPosition - transform.position).x * speed;
 
         //transform.position = targetPosition;
@@ -119,16 +104,13 @@ public class PlayerMotor : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!GameManager.isGameStarted || GameManager.pause)
+            return;
+
         // Move the Player
         controller.Move(moveVector * Time.fixedDeltaTime);
     }
 
-    public void StartJumping()
-    {
-        Jumping = true;
-        anim.SetTrigger("StartJumping");
-        transform.Translate(0, 50, 0);
-    }
     public void StartRunning()
     {
         isRunning = true;
@@ -160,7 +142,7 @@ public class PlayerMotor : MonoBehaviour
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        if (hit.gameObject.tag == "Death")
+        if (hit.gameObject.tag == "GameOver")
         {
             Crash();
         }

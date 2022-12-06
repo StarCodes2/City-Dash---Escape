@@ -8,6 +8,8 @@ TagManager:
   - Tripe
   - Grounded
   - Obstacle
+  - BusBody
+  - GameOver
   layers:
   - Default
   - TransparentFX
