@@ -10,14 +10,16 @@ public class GameManager : MonoBehaviour
     public static GameManager singleton;
 
     public static bool gameOver;
-    public static bool isGameStarted;
-    public static bool mute = false;
+    public static bool isGameStarted = false;
+    public static bool mute, pause = false;
     private PlayerMotor motor;
     private int lastScore;
 
     // UI and UI fields
-    public Text scoreText, coinText, modifierText, hiScoreText;
+    public Text scoreText, coinText, modifierText, hiScoreText, gameOverScore, gameOverCoin;
     private float score, coinScore, modifierScore;
+    public GameObject gameCanvas, pauseButton;
+    public GameObject gameOverCanvas;
 
     private void Awake()
     {
@@ -49,7 +51,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (isGameStarted)
+        if (isGameStarted && !pause)
         {
             // Bump the score up
             lastScore = (int)score;
@@ -76,6 +78,19 @@ public class GameManager : MonoBehaviour
         modifierText.text = "x" + modifierScore.ToString("0.0");
     }
 
+    public void OnPause(bool onPause)
+    {
+        pause = onPause;
+        if (!onPause)
+        {
+            Time.timeScale = 1;
+        }
+        else
+        {
+            Time.timeScale = 0;
+        }
+    }
+
     public void OnRestartButton()
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene("Game Scene");
@@ -85,5 +100,16 @@ public class GameManager : MonoBehaviour
     {
         isGameStarted = true;
         motor.StartRunning();
+    }
+
+    public void OnDeath()
+    {
+        isGameStarted = false;
+        gameOver = true;
+        gameOverScore.text = score.ToString("0");
+        gameOverCoin.text = coinScore.ToString("0");
+        gameCanvas.SetActive(false);
+        pauseButton.SetActive(false);
+        gameOverCanvas.SetActive(true);
     }
 }
