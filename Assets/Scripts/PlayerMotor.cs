@@ -10,7 +10,7 @@ public class PlayerMotor : MonoBehaviour
     private int laneNumberOne = 2;
     //Jumping
     private bool onGround = true;
-    public float jumpForce = 10;
+    public float jumpForce = 5.0f;
 
     //Sliding
     private bool isSliding = false;
@@ -33,7 +33,10 @@ public class PlayerMotor : MonoBehaviour
 
     private int desiredLane = 1; //0:Left 1:Middle 2:Right
     public float laneDisance = 4; //the distance between two lanes
-    public float gravity = -20.0f;
+    public float gravity = -10.0f;
+
+    //Sound
+    private AudioManager audioManager;
 
     // Start is called before the first frame update
     void Start()
@@ -41,6 +44,7 @@ public class PlayerMotor : MonoBehaviour
         speed = originalSpeed;
         controller = GetComponent<CharacterController>();
         anim = GetComponent<Animator>();
+        audioManager = FindObjectOfType<AudioManager>();
     }
 
     // Update is called once per frame
@@ -78,6 +82,8 @@ public class PlayerMotor : MonoBehaviour
             desiredLane++;
             if (desiredLane == 3)
                 desiredLane = laneNumberOne;
+
+            audioManager.Play("Move");
         }
 
         if (SwipeManager.swipeLeft)
@@ -85,6 +91,8 @@ public class PlayerMotor : MonoBehaviour
             desiredLane--;
             if (desiredLane == -1)
                 desiredLane = 0;
+
+            audioManager.Play("Move");
         }
 
         // Calculate where we should be in he future
@@ -124,6 +132,7 @@ public class PlayerMotor : MonoBehaviour
         anim.SetBool("isSliding", true);
         yield return new WaitForSeconds(Timerate);
         anim.SetBool("isSliding", false);
+        audioManager.Play("Slide");
     }
 
     private void Jump()
@@ -131,6 +140,7 @@ public class PlayerMotor : MonoBehaviour
         onGround = false;
         anim.SetBool("Jump", true);
         moveVector.y = jumpForce;
+        audioManager.Play("Jump");
     }
 
     private void Crash()
@@ -138,6 +148,11 @@ public class PlayerMotor : MonoBehaviour
         anim.SetTrigger("Death");
         isRunning = false;
         GameManager.singleton.OnDeath();
+
+        if (!onGround)
+        {
+            //
+        }
     }
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
