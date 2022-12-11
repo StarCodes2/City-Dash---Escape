@@ -26,20 +26,22 @@ public class PlayerMotor : MonoBehaviour
     // Speed Modifier
     private float originalSpeed = 7.0f;
     private float speed;
+    private float turnSpeed = 0.5f;
     private float speedInceaseLastTick;
     private float speedIncreaseTime = 2.5f;
     private float speedIncreaseAmount = 0.1f;
     private Vector3 moveVector; //= Vector3.zero;
 
     private int desiredLane = 1; //0:Left 1:Middle 2:Right
-    public float laneDisance = 4; //the distance between two lanes
+    private int currentLane;
+    public float laneDistance = 4; //the distance between two lanes
     public float gravity = -10.0f;
 
     //Sound
     private AudioManager audioManager;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         speed = originalSpeed;
         controller = GetComponent<CharacterController>();
@@ -48,7 +50,7 @@ public class PlayerMotor : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (!GameManager.isGameStarted || GameManager.pause)
             return;
@@ -79,6 +81,8 @@ public class PlayerMotor : MonoBehaviour
         // Gather the input on which lane we should be
         if (SwipeManager.swipeRight)
         {
+            // Saving the current lane
+            currentLane = desiredLane;
             desiredLane++;
             if (desiredLane == 3)
                 desiredLane = laneNumberOne;
@@ -88,6 +92,8 @@ public class PlayerMotor : MonoBehaviour
 
         if (SwipeManager.swipeLeft)
         {
+            // Saving the current lane
+            currentLane = desiredLane;
             desiredLane--;
             if (desiredLane == -1)
                 desiredLane = 0;
@@ -100,10 +106,10 @@ public class PlayerMotor : MonoBehaviour
 
         if (desiredLane == 0)
         {
-            targetPosition += Vector3.left * laneDisance;
+            targetPosition += Vector3.left * laneDistance;
         } else if (desiredLane == laneNumberOne)
         {
-            targetPosition += Vector3.right * laneDisance;
+            targetPosition += Vector3.right * laneDistance;
         }
         moveVector.x = (targetPosition - transform.position).x * speed;
 
@@ -117,6 +123,14 @@ public class PlayerMotor : MonoBehaviour
 
         // Move the Player
         controller.Move(moveVector * Time.fixedDeltaTime);
+
+        // Rotate the character to the direction he is going
+        Vector3 dir = controller.velocity;
+        if (dir != Vector3.zero)
+        {
+            dir.y = 0;
+            transform.forward = Vector3.Lerp(transform.forward, dir, turnSpeed);
+        }
     }
 
     public void StartRunning()
@@ -124,7 +138,7 @@ public class PlayerMotor : MonoBehaviour
         isRunning = true;
         GameManager.isGameStarted = true;
         anim.SetTrigger("StartRunning");
-        transform.Rotate(0, 0, 0);
+        //transform.Rotate(0, 0, 0);
     }
 
     private IEnumerator Slide()
@@ -167,6 +181,14 @@ public class PlayerMotor : MonoBehaviour
             onGround = true;
             anim.SetBool("Jump", false);
             anim.SetTrigger("StartRunning");
+        }
+
+        // Return the previous lane if the character hits the body of the bus while tring to change lane
+        if (hit.gameObject.tag == "BusBody")
+        {
+            desiredLane = currentLane;
+            audioManager.Play("Move");
+            //Debug.Log("BusBody");
         }
     }
 

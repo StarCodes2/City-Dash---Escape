@@ -219,6 +219,10 @@ PrefabInstance:
       propertyPath: jumpForce
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149058278003, guid: fe0fa96be7c65d1468689b81c6f2088d, type: 3}
+      propertyPath: desiredLane
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1425375460095629175, guid: fe0fa96be7c65d1468689b81c6f2088d, type: 3}
       propertyPath: m_ApplyRootMotion
       value: 0
@@ -2670,25 +2674,25 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: GameOver
     clip: {fileID: 8300000, guid: 0abff55ec8c84964baa6d7f632399dbd, type: 3}
-    volume: 0.8
+    volume: 1
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: Jump
     clip: {fileID: 8300000, guid: 6a15380f87eb9154981e565169c6e037, type: 3}
-    volume: 0.8
+    volume: 1
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: Slide
     clip: {fileID: 8300000, guid: 77d45a0b49e8d4841af0ce499c6054a2, type: 3}
-    volume: 0.8
+    volume: 1
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: Move
     clip: {fileID: 8300000, guid: 0bdf11e10e831db42bf9519aba3b4c8f, type: 3}
-    volume: 0.8
+    volume: 1
     pitch: 1
     loop: 0
     source: {fileID: 0}
