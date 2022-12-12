@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    public Transform target;
+    private Transform target;
     private Vector3 offset;
     public float smoothSpeed = 0.5f;
 
     // Start is called before the first frame update
     void Start()
     {
-        offset = transform.position - target.position;
+        AssignPlayer();
     }
 
     // Update is called once per frame
@@ -20,5 +20,11 @@ public class CameraFollow : MonoBehaviour
         Vector3 newPosition = Vector3.Lerp(transform.position, target.position + offset, smoothSpeed);
         newPosition.y = 3;
         transform.position = newPosition;
+    }
+
+    public void AssignPlayer()
+    {
+        target = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMotor>().transform;
+        offset = transform.position - target.position;
     }
 }

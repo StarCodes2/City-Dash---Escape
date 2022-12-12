@@ -144,9 +144,15 @@ public class PlayerMotor : MonoBehaviour
     private IEnumerator Slide()
     {
         anim.SetBool("isSliding", true);
-        yield return new WaitForSeconds(Timerate);
-        anim.SetBool("isSliding", false);
         audioManager.Play("Slide");
+        controller.height /= 2;
+        controller.center = new Vector3(controller.center.x, controller.center.y / 2, controller.center.z);
+
+        yield return new WaitForSeconds(Timerate);
+
+        anim.SetBool("isSliding", false);
+        controller.height *= 2;
+        controller.center = new Vector3(controller.center.x, controller.center.y * 2, controller.center.z);
     }
 
     private void Jump()
