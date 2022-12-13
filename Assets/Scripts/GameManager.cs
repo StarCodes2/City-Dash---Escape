@@ -16,10 +16,13 @@ public class GameManager : MonoBehaviour
     private int lastScore;
 
     // UI and UI fields
-    public Text scoreText, coinText, modifierText, hiScoreText, gameOverScore, gameOverCoin;
+    public Text scoreText, coinText, modifierText, hiScoreText, saveCoin, gameOverScore, gameOverCoin, soundsText;
     private float score, coinScore, modifierScore;
     public GameObject gameCanvas, pauseButton;
     public GameObject gameOverCanvas;
+
+    //Sound
+    private AudioManager audioManager;
 
     private void Awake()
     {
@@ -33,13 +36,27 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
 
+        if (PlayerPrefs.GetInt("Mute", 0) == 0)
+        {
+            mute = false;
+            soundsText.text = "";
+        }
+        else
+        {
+            mute = true;
+            soundsText.text = "/";
+        }
+
         modifierScore = 1.0f;
         motor = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMotor>();
+        audioManager = FindObjectOfType<AudioManager>();
         modifierText.text = "x" + modifierScore.ToString("0.0");
         scoreText.text = score.ToString("0");
         coinText.text = coinScore.ToString();
 
-        //hiScoreText.text = PlayerPrefs.GetInt("Hiscore").ToString();
+        saveCoin.text = PlayerPrefs.GetInt("Coin", 0).ToString();
+
+        hiScoreText.text = PlayerPrefs.GetInt("Hiscore", 0).ToString();
     }
 
     // Start is called before the first frame update
@@ -70,6 +87,7 @@ public class GameManager : MonoBehaviour
         coinText.text = coinScore.ToString("0");
         score += COIN_SCORE_AMOUNT;
         scoreText.text = score.ToString("0");
+        audioManager.Play("Coin");
     }
 
     public void UpdateModifier(float modifierAmount)
@@ -111,5 +129,44 @@ public class GameManager : MonoBehaviour
         gameCanvas.SetActive(false);
         pauseButton.SetActive(false);
         gameOverCanvas.SetActive(true);
+        audioManager.Play("GameOver");
+
+        // Check if this is a highscore
+        if (score > PlayerPrefs.GetInt("Hiscore"))
+        {
+            float s = score;
+            if (s % 1 == 0)
+                s += 1;
+            PlayerPrefs.SetInt("Hiscore", (int)s);
+        }
+
+        // Save Coin
+        float coin = PlayerPrefs.GetInt("Coin");
+        coin += coinScore;
+        PlayerPrefs.SetInt("Coin", (int)coin);
+    }
+
+    //Mute
+    public void ToggleMute()
+    {
+        if (mute)
+        {
+            mute = false;
+            soundsText.text = "";
+            PlayerPrefs.SetInt("Mute", 0);
+        }
+        else
+        {
+            mute = true;
+            soundsText.text = "/";
+            PlayerPrefs.SetInt("Mute", 1);
+        }
+    }
+
+    //Quit Game
+    public void QuitGame()
+    {
+        Application.Quit();
+        //Debug.Log("Quit Game");
     }
 }

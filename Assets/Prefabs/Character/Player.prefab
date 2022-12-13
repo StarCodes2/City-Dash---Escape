@@ -1021,10 +1021,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5c9a8c361ae3554a8392325dd5250a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpForce: 10
-  gravityModifier: 50
-  laneDisance: 4
-  gravity: -20
+  jumpForce: 5
+  gameOver: 0
+  laneDistance: 4
+  gravity: -10
 --- !u!65 &1467820335
 BoxCollider:
   m_ObjectHideFlags: 0
