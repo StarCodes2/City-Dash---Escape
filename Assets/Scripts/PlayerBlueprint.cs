@@ -1,5 +1,5 @@
 [System.Serializable]
-public class CarBlueprint
+public class PlayerBlueprint
 {
     public string name;
     public int index;
