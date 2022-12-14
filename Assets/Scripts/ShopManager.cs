@@ -8,6 +8,7 @@ public class ShopManager : MonoBehaviour
 
     //Array for Player AND Characters
     public GameObject[] playerStore;
+    public CarBlueprint[] players;
 
     // Start is called before the first frame update
     void Start()

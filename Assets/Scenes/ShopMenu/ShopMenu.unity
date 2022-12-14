@@ -551,6 +551,19 @@ MonoBehaviour:
   - {fileID: 965814020}
   - {fileID: 1402649570}
   - {fileID: 573603987}
+  players:
+  - name: charr1
+    index: 0
+    price: 0
+    isUnlock: 0
+  - name: cube
+    index: 1
+    price: 50
+    isUnlock: 0
+  - name: So
+    index: 0
+    price: 0
+    isUnlock: 0
 --- !u!1 &1219743233
 GameObject:
   m_ObjectHideFlags: 0
