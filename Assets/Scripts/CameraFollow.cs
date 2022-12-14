@@ -12,6 +12,7 @@ public class CameraFollow : MonoBehaviour
     void Start()
     {
         AssignPlayer();
+        EnemyFollow();
     }
 
     // Update is called once per frame
@@ -25,6 +26,12 @@ public class CameraFollow : MonoBehaviour
     public void AssignPlayer()
     {
         target = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMotor>().transform;
+        offset = transform.position - target.position;
+    }
+
+    public void EnemyFollow()
+    {
+        target = GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyChasing>().transform;
         offset = transform.position - target.position;
     }
 }

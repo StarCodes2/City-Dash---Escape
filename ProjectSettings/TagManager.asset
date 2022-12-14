@@ -10,6 +10,7 @@ TagManager:
   - Obstacle
   - BusBody
   - GameOver
+  - Enemy
   layers:
   - Default
   - TransparentFX
