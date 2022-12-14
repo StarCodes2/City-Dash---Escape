@@ -6,14 +6,15 @@ public class PlayerMotor : MonoBehaviour
 {
     // Movement
     private CharacterController controller;
-    private bool isRunning = false;
+   // private bool isRunning = false;
     private int laneNumberOne = 2;
+   
     //Jumping
     private bool onGround = true;
     public float jumpForce = 5.0f;
 
     //Sliding
-    private bool isSliding = false;
+    //private bool isSliding = false;
     private float Timerate = 1.3f;
 
     // Animation
@@ -135,7 +136,7 @@ public class PlayerMotor : MonoBehaviour
 
     public void StartRunning()
     {
-        isRunning = true;
+        //isRunning = true;
         GameManager.isGameStarted = true;
         anim.SetTrigger("StartRunning");
         //transform.Rotate(0, 0, 0);
@@ -166,7 +167,7 @@ public class PlayerMotor : MonoBehaviour
     private void Crash()
     {
         anim.SetTrigger("Death");
-        isRunning = false;
+       // isRunning = false;
         GameManager.singleton.OnDeath();
 
         if (!onGround)
